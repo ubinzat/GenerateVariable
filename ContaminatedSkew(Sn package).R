@@ -33,3 +33,25 @@ cont_skew <- function(n, mu = 0,sd1 = 1, sd2 = 9, prob = eps, sk=-0.9) {
 
 
 
+############## ikinci yaptığım belki sonra kullanılabilir
+library(sn)
+rrmix <- function(n, p1, rF1, arg1=NULL, arg2=NULL) {
+  
+  x1 <- vector(mode = "numeric", length = n)
+  for (i in 1:n){
+    u <- runif(1)
+    if (u < p1) x1[i] <- do.call("rF1", c(list(1), arg1))
+    if (u > p1) x1[i] <- do.call("rF1", c(list(1), arg2))
+  }
+  return(x1)
+}
+
+sknrm <- function(n,mu,sigma1,sigma2,skew,kurt,prob){
+  rrmix(n=n, p1=prob, rst, cp2dp(c(mu, sigma1, skew, kurt), "ST"), cp2dp(c(mu, sigma2, skew, kurt), "ST"))
+}
+
+aaa <- sknrm(n = 10000,0,3,10,-1.1,2.37,prob = 0.9)
+
+
+
+
