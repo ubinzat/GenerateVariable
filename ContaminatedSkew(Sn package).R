@@ -1,11 +1,23 @@
 library(sn)
-
 #The SN family only supports skew between -0.99527 and 0.99527.
 #Outside of this range, the ST family is needed, 
 #which requires a fourth variable: kurtosis:
 #cp2dp(c(0, 3, -0.99), "SN") # rsn fonksiyonu için verilen degerlerin dönüsümünü yapiyor.
 
-####rst
+
+
+#####Hızlı hali
+library(sn)
+cont_skew <- function(n, mu = 0,sd1 = 1, sd2 = 9, prob = 0.1, sk=-1.2,kur=2.37) {
+  # x1 <- vector(mode = "numeric", length = n)
+  s <- sum(sample(c(1,0), n, replace = T, prob = c(1 - prob, prob)))
+  x1 <- as.vector(rst(s,dp = cp2dp(c(mu, sd1, sk, kur), "ST")))
+  x2 <- as.vector(rst(n-s,dp = cp2dp(c(mu, sd2, sk, kur), "ST")))
+  return(c(x1,x2))
+}
+
+
+####rst (yavaş olanlar) ####
 cont_skew <- function(n, mu = 0,sd1 = 1, sd2 = 9, prob = eps, sk=-1.2,kur=2.37) {
   x1 <- vector(mode = "numeric", length = n)
   s <- sample(c(sd1, sd2), n, replace = T, prob = c(1 - prob, prob))
