@@ -21,9 +21,8 @@ cont_skew <- function(n, mu = 0,sd1 = 1, sd2 = 9, prob = 0.1, sk=-1.2,kur=2.37) 
 cont_skew <- function(n, mu = 0,sd1 = 1, sd2 = 9, prob = eps, sk=-1.2,kur=2.37) {
   x1 <- vector(mode = "numeric", length = n)
   s <- sample(c(sd1, sd2), n, replace = T, prob = c(1 - prob, prob))
-  rnorm(n, mean = mu, sd = s)
   for(i in 1:length(s)){
-    x1[i] <- rst(dp = cp2dp(c(mu, s[i], sk, kur), "ST"))
+    x1[i] <- sn::rst(dp = cp2dp(c(mu, s[i], sk, kur), "ST")) ## sn paketi
   }
   return(x1)
 }
@@ -35,7 +34,7 @@ cont_skew <- function(n, mu = 0,sd1 = 1, sd2 = 9, prob = eps, sk=-0.9) {
   s <- sample(c(sd1, sd2), n, replace = T, prob = c(1 - prob, prob))
   rnorm(n, mean = mu, sd = s)
   for(i in 1:length(s)){
-    x1[i] <- rsn(dp = cp2dp(c(mu, s[i], sk), "SN"))
+    x1[i] <- sn::rsn(dp = cp2dp(c(mu, s[i], sk), "SN")) ##sn paketi
   }
   return(x1)
 }
